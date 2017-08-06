@@ -22,7 +22,7 @@ public class PlacaCarroServico {
 	@Autowired
 	private PlacaCarroRepositorio repositorio;
 	
-	public void gravar(PlacaCarro placaCarro) {
+	public PlacaCarro gravar(PlacaCarro placaCarro) {
 		
 		if(StringUtils.isEmpty(placaCarro.getNumero())) {
 			throw new NegocioException("Placa deve ser preenhida");
@@ -34,7 +34,7 @@ public class PlacaCarroServico {
 			throw new NegocioException("Placa fora de formato");
 		}
 		
-		repositorio.save(placaCarro);
+		return repositorio.save(placaCarro);
 	}
 	
 	public PlacaCarro buscarPorNumero(String numero) {
@@ -52,8 +52,7 @@ public class PlacaCarroServico {
 	public PlacaCarro atualizar(String numero, PlacaCarro novosDados) {		
 		PlacaCarro placaCarro = buscarPorNumero(numero);
 		placaCarro.atualizar(novosDados);
-		gravar(placaCarro);
-		return placaCarro;
+		return gravar(placaCarro);
 	}
 	
 	public PlacaCarro excluir(String numero) {
