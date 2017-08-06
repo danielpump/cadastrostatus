@@ -49,4 +49,17 @@ public class PlacaCarroServico {
 		return repositorio.count();
 	}
 	
+	public PlacaCarro atualizar(String numero, PlacaCarro novosDados) {		
+		PlacaCarro placaCarro = buscarPorNumero(numero);
+		placaCarro.atualizar(novosDados);
+		gravar(placaCarro);
+		return placaCarro;
+	}
+	
+	public PlacaCarro excluir(String numero) {
+		PlacaCarro placaCarro = buscarPorNumero(numero);
+		repositorio.delete(placaCarro);
+		return placaCarro;
+	}
+	
 }
