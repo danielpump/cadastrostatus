@@ -13,5 +13,9 @@ import com.cadastro.status.modelo.PlacaCarro;
  *
  */
 public interface PlacaCarroRepositorio  extends CrudRepository<PlacaCarro, Long> {
+	
+	PlacaCarro findByNumero(String numero);
+		
+	Long countByStatus(String status);
 
 }

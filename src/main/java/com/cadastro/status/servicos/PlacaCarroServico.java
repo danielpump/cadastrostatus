@@ -37,4 +37,16 @@ public class PlacaCarroServico {
 		repositorio.save(placaCarro);
 	}
 	
+	public PlacaCarro buscarPorNumero(String numero) {
+		PlacaCarro placaCarro = repositorio.findByNumero(numero);
+		if(placaCarro == null) {
+			throw new NegocioException("Registro não existe");
+		}
+		return placaCarro;
+	}
+	
+	public Long quantidadePorStatus(String status) {		
+		return repositorio.count();
+	}
+	
 }
