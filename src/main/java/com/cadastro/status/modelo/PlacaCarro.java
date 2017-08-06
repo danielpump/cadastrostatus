@@ -45,6 +45,7 @@ public class PlacaCarro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonIgnore
+	@Getter
 	private Long id;
 		
 	@Column(length = 7)
@@ -55,8 +56,9 @@ public class PlacaCarro {
 	@Getter
 	private String status;
 	
-	public void numeroUpperCase() {
-		this.numero = this.numero.toUpperCase(); 
+	public void dadosUpperCase() {
+		this.numero = this.numero.toUpperCase();
+		this.status = this.status.toUpperCase();
 	}
 	
 	public void atualizar(PlacaCarro placaCarro) {

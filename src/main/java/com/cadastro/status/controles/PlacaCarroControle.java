@@ -34,15 +34,24 @@ public class PlacaCarroControle {
 
 	}
 
-	@RequestMapping(path = "/placa/consultar", method = RequestMethod.POST, params = "numero")
+	@RequestMapping(path = "/placa/atualizar", method = RequestMethod.POST, params = "numero")
+	public PlacaCarro cadastrar(@RequestParam String numero, @RequestBody PlacaCarro placa) {
+
+		return servico.atualizar(numero, placa);
+
+	}
+
+	@RequestMapping(path = "/placa/consultar", params = "numero", method = RequestMethod.GET)
 	public PlacaCarro buscarPorNumero(@RequestParam String numero) {
 
 		return servico.buscarPorNumero(numero);
 
 	}
 
-	@RequestMapping(path = "/placa/consultar", method = RequestMethod.POST, params = "status")
+	@RequestMapping(path = "/placa/consultar", params = "status", method = RequestMethod.GET)
 	public Map<String, Object> cadastrar(@RequestParam String status) {
+
+		status = status.toUpperCase();
 
 		HashMap<String, Object> mapa = new HashMap<>();
 		mapa.put("status", status);
@@ -52,14 +61,7 @@ public class PlacaCarroControle {
 
 	}
 
-	@RequestMapping(path = "/placa/atualizar", method = RequestMethod.POST, params = "numero")
-	public PlacaCarro cadastrar(@RequestParam String numero, @RequestBody PlacaCarro placa) {
-
-		return servico.atualizar(numero, placa);
-
-	}
-
-	@RequestMapping(path = "/placa/excluir", method = RequestMethod.POST, params = "numero")
+	@RequestMapping(path = "/placa/excluir", method = RequestMethod.DELETE, params = "numero")
 	public PlacaCarro excluir(@RequestParam String numero) {
 
 		return servico.excluir(numero);

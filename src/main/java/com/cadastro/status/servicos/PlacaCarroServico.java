@@ -21,44 +21,55 @@ public class PlacaCarroServico {
 
 	@Autowired
 	private PlacaCarroRepositorio repositorio;
-	
+
 	public PlacaCarro gravar(PlacaCarro placaCarro) {
-		
-		if(StringUtils.isEmpty(placaCarro.getNumero())) {
+
+		if (StringUtils.isEmpty(placaCarro.getNumero())) {
 			throw new NegocioException("Placa deve ser preenhida");
 		}
 		
-		placaCarro.numeroUpperCase();
-		
-		if(placaCarro.getNumero().matches("^[A-Z]{3}\\\\d{4}$")) {
+		if (StringUtils.isEmpty(placaCarro.getStatus())) {
+			throw new NegocioException("Status deve ser preenhida");
+		}
+
+		placaCarro.dadosUpperCase();
+
+		if (!placaCarro.getNumero().matches("^[A-Z]{3}\\d{4}$")) {
 			throw new NegocioException("Placa fora de formato");
 		}
-		
+
+		if (placaCarro.getId() == null) {
+			PlacaCarro buscarPorNumero = repositorio.findByNumero(placaCarro.getNumero());
+			if (buscarPorNumero != null) {
+				throw new NegocioException("Placa já cadastrada");
+			}
+		}
+
 		return repositorio.save(placaCarro);
 	}
-	
+
 	public PlacaCarro buscarPorNumero(String numero) {
-		PlacaCarro placaCarro = repositorio.findByNumero(numero);
-		if(placaCarro == null) {
+		PlacaCarro placaCarro = repositorio.findByNumero(numero.toUpperCase());
+		if (placaCarro == null) {
 			throw new NegocioException("Registro não existe");
 		}
 		return placaCarro;
 	}
-	
-	public Long quantidadePorStatus(String status) {		
-		return repositorio.count();
+
+	public Long quantidadePorStatus(String status) {
+		return repositorio.countByStatus(status);
 	}
-	
-	public PlacaCarro atualizar(String numero, PlacaCarro novosDados) {		
+
+	public PlacaCarro atualizar(String numero, PlacaCarro novosDados) {
 		PlacaCarro placaCarro = buscarPorNumero(numero);
 		placaCarro.atualizar(novosDados);
 		return gravar(placaCarro);
 	}
-	
+
 	public PlacaCarro excluir(String numero) {
 		PlacaCarro placaCarro = buscarPorNumero(numero);
 		repositorio.delete(placaCarro);
 		return placaCarro;
 	}
-	
+
 }
