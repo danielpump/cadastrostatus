@@ -55,6 +55,10 @@ public class PlacaCarro {
 	@Getter
 	private String status;
 	
+	public void numeroUpperCase() {
+		this.numero = this.numero.toUpperCase(); 
+	}
+	
 	public void atualizar(PlacaCarro status) {
 		if(!StringUtils.isEmpty(status.getStatus())) {
 			this.status = status.getStatus();
