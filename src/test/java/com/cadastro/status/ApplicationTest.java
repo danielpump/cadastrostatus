@@ -40,7 +40,7 @@ public class ApplicationTest {
 
 	@PostConstruct
 	public void init() throws DatabaseUnitException, SQLException {
-		IDataSet dataSet = new FlatXmlDataFileLoader().load("databaseTest.xml");
+		IDataSet dataSet = new FlatXmlDataFileLoader().load("/databaseTest.xml");
 
 		try (Connection jdbcConnection = SessionFactoryUtils.getDataSource(sessionFactory).getConnection()) {
 			IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);			
