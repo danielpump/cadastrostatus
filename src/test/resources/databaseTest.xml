@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
 	<placa_carro id="1" numero="FFF5888" status="OK" />
+	<placa_carro id="2" numero="FFF5889" status="BLOQUEADO" />
+	<placa_carro id="3" numero="FFF5890" status="APREENDIDO" />
+	<placa_carro id="4" numero="FFF5891" status="BLOQUEADO" />
 </dataset>

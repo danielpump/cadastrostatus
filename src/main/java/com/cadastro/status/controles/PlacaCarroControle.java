@@ -31,25 +31,22 @@ public class PlacaCarroControle {
 	public PlacaCarro cadastrar(@RequestBody PlacaCarro placa) {
 
 		return servico.gravar(placa);
-
 	}
 
 	@RequestMapping(path = "/placa/atualizar", method = RequestMethod.POST, params = "numero")
-	public PlacaCarro cadastrar(@RequestParam String numero, @RequestBody PlacaCarro placa) {
+	public PlacaCarro atualizar(@RequestParam String numero, @RequestBody PlacaCarro placa) {
 
 		return servico.atualizar(numero, placa);
-
 	}
 
 	@RequestMapping(path = "/placa/consultar", params = "numero", method = RequestMethod.GET)
 	public PlacaCarro buscarPorNumero(@RequestParam String numero) {
 
 		return servico.buscarPorNumero(numero);
-
 	}
 
 	@RequestMapping(path = "/placa/consultar", params = "status", method = RequestMethod.GET)
-	public Map<String, Object> cadastrar(@RequestParam String status) {
+	public Map<String, Object> buscarPorStatus(@RequestParam String status) {
 
 		status = status.toUpperCase();
 
@@ -58,14 +55,12 @@ public class PlacaCarroControle {
 		mapa.put("quantidade", servico.quantidadePorStatus(status));
 
 		return mapa;
-
 	}
 
 	@RequestMapping(path = "/placa/excluir", method = RequestMethod.DELETE, params = "numero")
 	public PlacaCarro excluir(@RequestParam String numero) {
 
 		return servico.excluir(numero);
-
 	}
 
 }
