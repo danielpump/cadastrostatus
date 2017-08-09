@@ -25,23 +25,23 @@ public class PlacaCarroServico {
 	public PlacaCarro gravar(PlacaCarro placaCarro) {
 
 		if (StringUtils.isEmpty(placaCarro.getNumero())) {
-			throw new NegocioException("Placa deve ser preenhida");
+			throw new NegocioException("Placa deve ser preenchida");
 		}
 		
 		if (StringUtils.isEmpty(placaCarro.getStatus())) {
-			throw new NegocioException("Status deve ser preenhida");
+			throw new NegocioException("Status deve ser preenchido");
 		}
 
 		placaCarro.dadosUpperCase();
 
 		if (!placaCarro.getNumero().matches("^[A-Z]{3}\\d{4}$")) {
-			throw new NegocioException("Placa fora de formato");
+			throw new NegocioException("Placa fora de formato padronizado");
 		}
 
 		if (placaCarro.getId() == null) {
 			PlacaCarro buscarPorNumero = repositorio.findByNumero(placaCarro.getNumero());
 			if (buscarPorNumero != null) {
-				throw new NegocioException("Placa já cadastrada");
+				throw new NegocioException("Registro existente na base de dados");
 			}
 		}
 

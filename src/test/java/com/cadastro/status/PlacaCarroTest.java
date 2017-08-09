@@ -96,6 +96,27 @@ public class PlacaCarroTest extends ApplicationTest {
 	}
 
 	@Test
+	public void testeDeCadastroSemCampoPlaca() throws Exception {
+		String mensagem = this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"status\":\"OK\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Placa deve ser preenchida");
+
+	}
+
+	@Test
+	public void testeDeCadastroSemCampoStatus() throws Exception {
+		String mensagem = this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF5885\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Status deve ser preenchido");
+	}
+
+	@Test
 	public void testeDeAtualizacaoComStatusBloqueado() throws Exception {
 		this.mockMvc
 				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
