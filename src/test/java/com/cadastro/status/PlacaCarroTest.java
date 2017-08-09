@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.cadastro.status.excecoes.NegocioException;
 
 @RunWith(SpringRunner.class)
 @Profile("teste")
@@ -45,18 +47,18 @@ public class PlacaCarroTest extends ApplicationTest {
 
 	@Test
 	public void testeDeConsultaPorPlacaDeVeiculoComStatusApreendido() throws Exception {
-		String jsonResposta = this.mockMvc.perform(get("/placa/consultar?numero=FFF5890")).andExpect(status().isOk())
-				.andReturn().getResponse().getContentAsString();
+		String jsonResposta = this.mockMvc
+				.perform(get("/placa/consultar?numero=FFF5890").contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
 		assertThat(jsonResposta).isEqualTo("{\"numero\":\"FFF5890\",\"status\":\"APREENDIDO\"}");
 	}
 
 	@Test
 	public void testeDeConsultaPorPlacaDeVeiculoInexistente() throws Exception {
-//		 exception.expectMessage("Registro não existe");
-		// exception.expect(validarMensagemDeErro("Registro não existe"));
-		this.mockMvc.perform(get("/placa/consultar?numero=FFF5885")).andExpect(status().isBadRequest()).andReturn()
-				.getResponse().getContentAsString();
+		String message = this.mockMvc.perform(get("/placa/consultar?numero=FFF5885")).andExpect(status().isBadRequest())
+				.andReturn().getResolvedException().getMessage();
+		assertThat(message).isEqualTo("Registro sem cadastro no banco de dados");
 	}
 
 	@Test

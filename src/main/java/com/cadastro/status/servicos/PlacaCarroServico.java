@@ -51,7 +51,7 @@ public class PlacaCarroServico {
 	public PlacaCarro buscarPorNumero(String numero) {
 		PlacaCarro placaCarro = repositorio.findByNumero(numero.toUpperCase());
 		if (placaCarro == null) {
-			throw new NegocioException("Registro não existe");
+			throw new NegocioException("Registro sem cadastro no banco de dados");
 		}
 		return placaCarro;
 	}
