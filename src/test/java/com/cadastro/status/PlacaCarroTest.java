@@ -1,13 +1,14 @@
 package com.cadastro.status;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.Matchers.containsString;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -15,17 +16,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.cadastro.status.controles.PlacaCarroControle;
-
 @RunWith(SpringRunner.class)
 @Profile("teste")
 public class PlacaCarroTest extends ApplicationTest {
 
 	@Autowired
-	private PlacaCarroControle controle;
-
-	@Autowired
 	private MockMvc mockMvc;
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void testeDeConsultaPorPlacaDeVeiculoComStatusOK() throws Exception {
@@ -54,10 +53,10 @@ public class PlacaCarroTest extends ApplicationTest {
 
 	@Test
 	public void testeDeConsultaPorPlacaDeVeiculoInexistente() throws Exception {
-		String jsonResposta = this.mockMvc.perform(get("/placa/consultar?numero=FFF5885"))
-				.andExpect(status().isBadRequest())
-				// .andExpect(status().reason(containsString("")))
-				.andReturn().getResponse().getContentAsString();
+//		 exception.expectMessage("Registro não existe");
+		// exception.expect(validarMensagemDeErro("Registro não existe"));
+		this.mockMvc.perform(get("/placa/consultar?numero=FFF5885")).andExpect(status().isBadRequest()).andReturn()
+				.getResponse().getContentAsString();
 	}
 
 	@Test
@@ -108,7 +107,7 @@ public class PlacaCarroTest extends ApplicationTest {
 
 		assertThat(jsonResposta).isEqualTo("{\"numero\":\"FFF5885\",\"status\":\"BLOQUEADO\"}");
 	}
-	
+
 	@Test
 	public void testeDeExclusaoDeVeiculo() throws Exception {
 		this.mockMvc
@@ -116,10 +115,10 @@ public class PlacaCarroTest extends ApplicationTest {
 						.content("{\"numero\":\"FFF5885\",\"status\":\"OK\"}"))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
 
-		String jsonResposta = this.mockMvc
-				.perform(delete("/placa/excluir?numero=FFF5885"))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+		String jsonResposta = this.mockMvc.perform(delete("/placa/excluir?numero=FFF5885")).andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
 
 		assertThat(jsonResposta).isEqualTo("{\"numero\":\"FFF5885\",\"status\":\"OK\"}");
 	}
+
 }
