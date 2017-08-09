@@ -96,6 +96,28 @@ public class PlacaCarroTest extends ApplicationTest {
 	}
 
 	@Test
+	public void testeDeCadastroComComPlacaInvalida() throws Exception {
+		String mensagem = this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF588\",\"status\":\"OK\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Placa fora de formato padronizado");
+
+	}
+
+	@Test
+	public void testeDeCadastroComComPlacaDuplicada() throws Exception {
+		String mensagem = this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF5889\",\"status\":\"OK\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Registro existente na base de dados");
+
+	}
+
+	@Test
 	public void testeDeCadastroSemCampoPlaca() throws Exception {
 		String mensagem = this.mockMvc
 				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -132,6 +154,36 @@ public class PlacaCarroTest extends ApplicationTest {
 	}
 
 	@Test
+	public void testeDeAtualizacaoComPlacaInvalida() throws Exception {
+		this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF5885\",\"status\":\"OK\"}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		String mensagem = this.mockMvc
+				.perform(post("/placa/atualizar?numero=FFF588").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"status\":\"BLOQUEADO\"}"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Registro sem cadastro no banco de dados");
+	}
+	
+	@Test
+	public void testeDeAtualizacaoComGarantiaDeQuePlacaFFF5885NaoEhAtualizadaPorFFF5889() throws Exception {
+		this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF5885\",\"status\":\"OK\"}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		String jsonResposta = this.mockMvc
+				.perform(post("/placa/atualizar?numero=FFF5885").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF5889\",\"status\":\"BLOQUEADO\"}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		assertThat(jsonResposta).isEqualTo("{\"numero\":\"FFF5885\",\"status\":\"BLOQUEADO\"}");
+	}
+
+	@Test
 	public void testeDeExclusaoDeVeiculo() throws Exception {
 		this.mockMvc
 				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -142,6 +194,19 @@ public class PlacaCarroTest extends ApplicationTest {
 				.andReturn().getResponse().getContentAsString();
 
 		assertThat(jsonResposta).isEqualTo("{\"numero\":\"FFF5885\",\"status\":\"OK\"}");
+	}
+	
+	@Test
+	public void testeDeExclusaoDeVeiculoComPlacaInexistente() throws Exception {
+		this.mockMvc
+				.perform(post("/placa/cadastrar").contentType(MediaType.APPLICATION_JSON_UTF8)
+						.content("{\"numero\":\"FFF5885\",\"status\":\"OK\"}"))
+				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+
+		String mensagem = this.mockMvc.perform(delete("/placa/excluir?numero=FFF5886"))
+				.andExpect(status().isBadRequest()).andReturn().getResolvedException().getMessage();
+
+		assertThat(mensagem).isEqualTo("Registro sem cadastro no banco de dados");
 	}
 
 }
