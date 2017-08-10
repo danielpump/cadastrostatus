@@ -34,6 +34,7 @@ public class PlacaCarroControle {
 	private PlacaCarroServico servico;
 
 	/**
+	 * URL: {@code http://localhost:8081/placa/cadastrar}<br>
 	 * Realiza o cadastro de uma placa no sistema utilizando um requisição POST com o JSON<br>
 	 * {<br>
 	 * 		"numero":"Placa do veículo",<br>
@@ -50,6 +51,7 @@ public class PlacaCarroControle {
 	}
 
 	/**
+	 * URL: {@code http://localhost:8081/placa/atualizar?numero=XXXYYYY}<br>
 	 * Realiza a atualização de uma placa no sistema utilizando um requisição POST tendo o parametro {@code numero} como placa do veículo na URL e com o JSON<br>
 	 * {<br> 		
 	 * 		"status":"Status do veículo"<br>
@@ -66,6 +68,7 @@ public class PlacaCarroControle {
 	}
 
 	/**
+	 * URL: {@code http://localhost:8081/placa/consultar?numero=XXXYYYY}<br>
 	 * Realiza a consulta de uma placa no sistema utilizando uma requisição GET tendo o parametro {@code numero} como placa do veículo na URL<br>
 	 * Formato do JSON de resposta<br>
 	 * {<br>
@@ -83,6 +86,7 @@ public class PlacaCarroControle {
 	}
 
 	/**
+	 * URL: {@code http://localhost:8081/placa/consultar?status=OK}<br>
 	 * Realiza a consulta de um status no sistema utilizando uma requisição GET tendo o parametro {@code status} como status a ser contabilizado na URL<br>
 	 * Formato do JSON de resposta<br>
 	 * 
@@ -105,6 +109,7 @@ public class PlacaCarroControle {
 	}
 
 	/**
+	 * URL: {@code http://localhost:8081/placa/excluir?numero=XXXYYYY}<br>
 	 * Realiza a exclusão de uma placa no sistema utilizando uma requisição DELETE tendo o parametro {@code numero} como placa do veículo na URL<br>
 	 * Formato do JSON de resposta<br>
 	 * {<br>
