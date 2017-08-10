@@ -56,11 +56,20 @@ public class PlacaCarro {
 	@Getter
 	private String status;
 	
+	/**
+	 * Coloca os dados da placa em CaixaAlta para padronizar a forma de trabalho da aplicação
+	 */
 	public void dadosUpperCase() {
 		this.numero = this.numero.toUpperCase();
 		this.status = this.status.toUpperCase();
 	}
 	
+	/**
+	 * Atualiza os campo que a aplicação permite serem alterados com a entidade passada como parametro<br>
+	 * Esta entidade permite alterar apenas o campo status
+	 * 
+	 * @param placaCarro Entidade que possui os novos valores.
+	 */
 	public void atualizar(PlacaCarro placaCarro) {
 		if(!StringUtils.isEmpty(placaCarro.getStatus())) {
 			this.status = placaCarro.getStatus();

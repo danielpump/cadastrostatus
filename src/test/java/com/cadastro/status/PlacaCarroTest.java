@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,8 +16,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.cadastro.status.excecoes.NegocioException;
-
+/**
+ * Relação de testes de regras que a aplicação aplica para os cenários de Veículo
+ * 
+ * @author Daniel Ferraz
+ * @since 9 de ago de 2017
+ *
+ */
 @RunWith(SpringRunner.class)
 @Profile("teste")
 public class PlacaCarroTest extends ApplicationTest {

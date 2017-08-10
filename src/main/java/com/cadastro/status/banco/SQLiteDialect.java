@@ -8,6 +8,13 @@ import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.dialect.function.VarArgsSQLFunction;
 import org.hibernate.type.StringType;
 
+/**
+ * Implementação do dialeto de SQLite pra o hibernate
+ * 
+ * @author Daniel Ferraz
+ * @since 9 de ago de 2017
+ *
+ */
 public class SQLiteDialect extends Dialect {
     public SQLiteDialect() {
         registerColumnType(Types.BIT, "integer");
@@ -44,27 +51,12 @@ public class SQLiteDialect extends Dialect {
         return true;
     }
 
-  /*
-  public boolean supportsInsertSelectIdentity() {
-    return true; // As specify in NHibernate dialect
-  }
-  */
 
     public boolean hasDataTypeInIdentityColumn() {
-        return false; // As specify in NHibernate dialect
+        return false;
     }
 
-  /*
-  public String appendIdentitySelectToInsert(String insertString) {
-    return new StringBuffer(insertString.length()+30). // As specify in NHibernate dialect
-      append(insertString).
-      append("; ").append(getIdentitySelectString()).
-      toString();
-  }
-  */
-
     public String getIdentityColumnString() {
-        // return "integer primary key autoincrement";
         return "integer";
     }
 

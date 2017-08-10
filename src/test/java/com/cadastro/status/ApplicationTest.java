@@ -24,6 +24,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
+ * Configurações de inicilização de testes de integração
+ * 
  * @author Daniel Ferraz
  * @since 7 de ago de 2017
  *
@@ -34,16 +36,16 @@ import org.springframework.test.context.ContextConfiguration;
 @AutoConfigureMockMvc
 @ActiveProfiles("teste")
 public class ApplicationTest {
-	
-    @Autowired
-    SessionFactory sessionFactory;
+
+	@Autowired
+	SessionFactory sessionFactory;
 
 	@PostConstruct
 	public void init() throws DatabaseUnitException, SQLException {
 		IDataSet dataSet = new FlatXmlDataFileLoader().load("/databaseTest.xml");
 
 		try (Connection jdbcConnection = SessionFactoryUtils.getDataSource(sessionFactory).getConnection()) {
-			IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);			
+			IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
 			DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
 		}

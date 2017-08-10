@@ -9,7 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 /**
- * Classe que inicializa a aplicação
+ * Classe que inicializa a aplicação<br>
+ * Utiliza o spring boot starter para inicializar um container do tomcat para a aplicação.
  * 
  * @author Daniel Ferraz
  * @since 4 de ago de 2017
