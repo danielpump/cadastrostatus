@@ -12,7 +12,7 @@ import com.cadastro.status.modelo.PlacaCarro;
 import com.cadastro.status.repositorios.PlacaCarroRepositorio;
 
 /**
- * Serviços para a entidade {@link PlacaCarro}}
+ * Serviços para a entidade {@link PlacaCarro}
  * 
  * @author Daniel Ferraz
  * @since 6 de ago de 2017
@@ -87,7 +87,7 @@ public class PlacaCarroServico {
 	}
 
 	/**
-	 * Atualiza um veícul com os novos dados passados
+	 * Atualiza um veículo com os novos dados passados
 	 * 
 	 * @param numero Placa para ser atualizadas
 	 * @param novosDados Novos dados que serão atualizados
