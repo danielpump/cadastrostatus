@@ -30,9 +30,6 @@ public class PlacaCarroTest extends ApplicationTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
-
 	@Test
 	public void testeDeConsultaPorPlacaDeVeiculoComStatusOK() throws Exception {
 		String jsonResposta = this.mockMvc.perform(get("/placa/consultar?numero=FFF5888")).andExpect(status().isOk())
